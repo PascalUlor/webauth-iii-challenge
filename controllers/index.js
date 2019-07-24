@@ -27,8 +27,9 @@ const getUsers = async (req, res) => {
 const createUser = async (req, res) => {
   try {
     const payload = req.new;
+    console.log(payload);
     // return requestHelper.success(res, 200, 'User signup successfull', payload);
-    Token.createToken(res, 200, 'Signup succesful', payload);
+    Token.createToken(res, 201, 'Signup succesful', ...payload);
   } catch (err) {
     return requestHelper.error(res, 500, 'server error');
   }
@@ -37,12 +38,6 @@ const createUser = async (req, res) => {
 const loginUser = async (req, res) => {
   try {
     const payload = req.user;
-    // return requestHelper.success(
-    //   res,
-    //   200,
-    //   `Welcome back ${payload.username}`,
-    //   payload
-    // );
     Token.createToken(res, 200, 'Login succesful', payload);
   } catch (err) {
     return requestHelper.error(res, 500, 'server error');

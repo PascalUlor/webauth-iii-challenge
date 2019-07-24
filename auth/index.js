@@ -22,7 +22,9 @@ const authenticate = async (req, res, next) => {
 
 const createToken = (res, statusCode, message, user) => {
   const payload = {
-    username: user.username
+    username: user.username,
+    department: user.department,
+    role: user.role
   };
   const token = jwt.sign(payload, secret.jwtSecret, {
     expiresIn: 60 * 60 * 1440
