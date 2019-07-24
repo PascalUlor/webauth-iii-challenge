@@ -5,6 +5,15 @@ const Token = require('../auth');
 
 const getUsers = async (req, res) => {
   try {
+    if (req.decodedToken.role !== 'admin') {
+      const users = await userModel
+        .find()
+        .where({ department: req.decodedToken.department });
+      return res.status(200).json({
+        status: 200,
+        data: users
+      });
+    }
     const users = await userModel.find();
     if (users) {
       return res.status(200).json({
@@ -27,7 +36,6 @@ const getUsers = async (req, res) => {
 const createUser = async (req, res) => {
   try {
     const payload = req.new;
-    console.log(payload);
     // return requestHelper.success(res, 200, 'User signup successfull', payload);
     Token.createToken(res, 201, 'Signup succesful', ...payload);
   } catch (err) {
